@@ -3,11 +3,11 @@ package com.example.clothesstoreapp.di
 
 import com.example.clothesstoreapp.datasource.localdatasource.AppDatabase
 import com.example.clothesstoreapp.datasource.network.api.ApiService
+import com.example.clothesstoreapp.datasource.network.utils.ResponseConverter
 import com.example.clothesstoreapp.datasource.repository.Repository
 import com.example.clothesstoreapp.datasource.repositoryimpl.RepositoryImpl
 import com.example.clothesstoreapp.datasource.utils.BasketMapper
 import com.example.clothesstoreapp.datasource.utils.WishlistMapper
-import com.example.tandemapp.network.utils.ResponseConverter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

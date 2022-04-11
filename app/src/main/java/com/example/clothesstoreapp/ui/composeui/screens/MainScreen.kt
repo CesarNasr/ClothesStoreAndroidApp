@@ -1,19 +1,17 @@
-package com.example.clothesstoreapp.ui.screens
+package com.example.clothesstoreapp.ui.composeui.screens
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.clothesstoreapp.ui.BottomBarScreen
-import com.example.clothesstoreapp.ui.BottomNavGraph
+import com.example.clothesstoreapp.ui.composeui.BottomBarScreen
+import com.example.clothesstoreapp.ui.composeui.BottomNavGraph
 
 @Composable
 fun MainScreen() {
@@ -58,11 +56,11 @@ fun RowScope.AddItem(
         },
         icon = {
                 if (screen.badgeCount > 0 && screen.route == "wishlist") {
-                    BadgeBox(badgeContent = {
-                        Text(text = screen.badgeCount.toString())
-                    }) {
-                        Icon(imageVector = screen.icon, contentDescription = screen.title)
-                    }
+//                    BadgeBox(badgeContent = {
+//                        Text(text = screen.badgeCount.toString())
+//                    }) {
+//                        Icon(imageVector = screen.icon, contentDescription = screen.title)
+//                    }
                 } else {
                     Icon(imageVector = screen.icon, contentDescription = screen.title)
                 }
@@ -80,11 +78,3 @@ fun RowScope.AddItem(
         }
     )
 }
-
-
-
-
-
-
-
-

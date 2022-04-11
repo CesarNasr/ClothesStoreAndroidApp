@@ -1,4 +1,4 @@
-package com.example.moviesharingapp.data.localdb
+package com.example.clothesstoreapp.datasource.localdatasource
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

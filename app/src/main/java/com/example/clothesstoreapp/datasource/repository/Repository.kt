@@ -2,7 +2,7 @@ package com.example.clothesstoreapp.datasource.repository
 
 import com.example.clothesstoreapp.datasource.model.ApiEntry
 import com.example.clothesstoreapp.datasource.model.Product
-import com.example.tandemapp.network.utils.Resource
+import com.example.clothesstoreapp.datasource.network.utils.Resource
 
 /**
  * Repository interface for the purpose of abstraction between data layer and another presentation layer

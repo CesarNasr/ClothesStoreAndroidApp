@@ -1,4 +1,4 @@
-package com.example.tandemapp.network.utils
+package com.example.clothesstoreapp.datasource.network.utils
 
 import com.example.clothesstoreapp.datasource.model.ApiEntry
 import retrofit2.Response

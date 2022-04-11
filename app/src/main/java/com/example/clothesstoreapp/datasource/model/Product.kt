@@ -2,6 +2,7 @@ package com.example.clothesstoreapp.datasource.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 data class Product(
@@ -19,4 +20,4 @@ data class Product(
     val price: Double,
     @SerializedName("stock")
     val stock: Int? = null
-)
+) : Serializable

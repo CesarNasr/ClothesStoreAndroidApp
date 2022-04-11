@@ -7,8 +7,8 @@ import com.example.clothesstoreapp.datasource.repository.Repository
 import com.example.clothesstoreapp.datasource.localdatasource.AppDatabase
 import com.example.clothesstoreapp.datasource.utils.BasketMapper
 import com.example.clothesstoreapp.datasource.utils.WishlistMapper
-import com.example.tandemapp.network.utils.Resource
-import com.example.tandemapp.network.utils.ResponseConverter
+import com.example.clothesstoreapp.datasource.network.utils.Resource
+import com.example.clothesstoreapp.datasource.network.utils.ResponseConverter
 import javax.inject.Inject
 
 /**

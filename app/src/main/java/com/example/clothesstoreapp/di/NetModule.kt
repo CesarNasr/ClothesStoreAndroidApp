@@ -3,7 +3,7 @@ package com.example.clothesstoreapp.di
 import android.content.Context
 import com.example.clothesstoreapp.BuildConfig
 import com.example.clothesstoreapp.datasource.network.api.ApiService
-import com.example.tandemapp.network.utils.NetworkHelper
+import com.example.clothesstoreapp.datasource.network.utils.NetworkHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

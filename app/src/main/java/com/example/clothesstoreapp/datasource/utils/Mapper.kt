@@ -1,8 +1,8 @@
 package com.example.clothesstoreapp.datasource.utils
 
+import com.example.clothesstoreapp.datasource.localdatasource.BasketItem
 import com.example.clothesstoreapp.datasource.localdatasource.WishlistItem
 import com.example.clothesstoreapp.datasource.model.Product
-import com.example.moviesharingapp.data.localdb.BasketItem
 import javax.inject.Inject
 
 class WishlistMapper

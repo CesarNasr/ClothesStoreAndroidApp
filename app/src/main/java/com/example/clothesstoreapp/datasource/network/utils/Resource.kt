@@ -1,4 +1,4 @@
-package com.example.tandemapp.network.utils
+package com.example.clothesstoreapp.datasource.network.utils
 /**
  * Sealed Class to monitor the API calls state and update the UI, can hold dynamic data and messages
  */

@@ -1,4 +1,4 @@
-package com.example.clothesstoreapp.ui.screens
+package com.example.clothesstoreapp.ui.composeui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

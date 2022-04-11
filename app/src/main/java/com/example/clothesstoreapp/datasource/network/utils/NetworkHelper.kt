@@ -1,4 +1,4 @@
-package com.example.tandemapp.network.utils
+package com.example.clothesstoreapp.datasource.network.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
