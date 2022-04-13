@@ -19,6 +19,11 @@ interface BasketDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertItem(basket: Basket): Long
 
+    /**
+     * I have used flows and coroutines for applying reactive programming where the wishlist and basket badges
+     * are always observed form the ROOM database and thus the UI will always be updated when removing/adding items to
+     * the database table.
+     */
     @Query("SELECT COUNT(*) FROM basket")
     fun getBasketCount(): Flow<Int>
 

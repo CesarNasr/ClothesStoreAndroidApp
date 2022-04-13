@@ -45,6 +45,11 @@ class RepositoryImpl
         return db.WishlistDao().deleteItem(wishlistMapper.mapToEntity(item))
     }
 
+    /**
+     * I have used flows and coroutines for applying reactive programming where the wishlist and basket badges
+     * are always observed form the ROOM database and thus the UI will always be updated when removing/adding items to
+     * the database table.
+     */
     override suspend fun getWishListCount(): Flow<Int> {
         return db.WishlistDao().getWishListCount().transform {
             emit(it)
