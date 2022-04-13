@@ -7,22 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.example.clothesstoreapp.R
 import com.example.clothesstoreapp.databinding.FragmentProductBottomSheetBinding
 import com.example.clothesstoreapp.datasource.model.Product
-import com.example.clothesstoreapp.ui.viewmodels.SharedViewModel
+import com.example.clothesstoreapp.ui.utils.UiState
+import com.example.clothesstoreapp.ui.viewmodels.ProductDetailViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 
 private const val ARG_PRODUCT = "product"
 
+@AndroidEntryPoint
 class ProductBottomSheet : BottomSheetDialogFragment() {
+
     private var productItem: Product? = null
     private lateinit var binding: FragmentProductBottomSheetBinding
 
-    private val viewModel: SharedViewModel by activityViewModels()
+    private val viewModel: ProductDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,20 +57,24 @@ class ProductBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        BottomSheetBehavior.from(binding.root).state = BottomSheetBehavior.STATE_EXPANDED
-
         binding.closeBtn.setOnClickListener {
             this.dismiss()
         }
+
+        viewModel.onItemInserted.observe(viewLifecycleOwner){
+            if(it is UiState.Loaded){
+                this.dismiss()
+            }
+        }
     }
 
-    protected lateinit var dialog : BottomSheetDialog
+    private lateinit var dialog : BottomSheetDialog
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         return dialog
     }
     //set the behavior here
-    fun setFullScreen(){
+    private fun setFullScreen(){
         dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
     override fun onStart() {
@@ -73,6 +82,7 @@ class ProductBottomSheet : BottomSheetDialogFragment() {
         setFullScreen()//initiated at onActivityCreated(), onStart()
     }
     companion object {
+        val TAG = "ProductBottomSheet"
 
         @JvmStatic
         fun newInstance(product: Product) =

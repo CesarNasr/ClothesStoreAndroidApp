@@ -10,9 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.clothesstoreapp.R
 import com.example.clothesstoreapp.databinding.FragmentCatalogueBinding
+import com.example.clothesstoreapp.datasource.model.Product
 import com.example.clothesstoreapp.ui.adapters.CatalogueAdapter
+import com.example.clothesstoreapp.ui.utils.UiState
 import com.example.clothesstoreapp.ui.viewmodels.CatalogueViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -49,12 +50,19 @@ class CatalogueFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
 
-        viewModel.productList.observe(viewLifecycleOwner) {
-            catalogueAdapter.setList(it)
-        }
+        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
+            when (uiState) {
+                is UiState.Loaded -> {
+                    catalogueAdapter.setList(uiState.data as MutableList<Product>)
+                }
+                is UiState.Error -> {
 
-        viewModel.uiState.observe(viewLifecycleOwner) {
-            // show error dialog if needed
+                    // show error dialog if needed using error message : {uiState.message}
+                }
+                else -> {
+                    // do something
+                }
+            }
         }
     }
 
@@ -69,12 +77,9 @@ class CatalogueFragment : Fragment() {
             val bottomSheet = ProductBottomSheet.newInstance(it)
             bottomSheet.show(
                 requireActivity().supportFragmentManager,
-                "ModalBottomSheet"
+               ProductBottomSheet.TAG
             )
-
         }
-
-
     }
 
     companion object {

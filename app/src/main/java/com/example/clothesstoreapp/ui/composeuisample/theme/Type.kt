@@ -1,4 +1,4 @@
-package com.example.clothesstoreapp.ui.composeui.theme
+package com.example.clothesstoreapp.ui.composeuisample.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

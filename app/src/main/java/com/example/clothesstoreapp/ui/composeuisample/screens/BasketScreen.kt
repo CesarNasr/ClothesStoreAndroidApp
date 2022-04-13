@@ -1,4 +1,4 @@
-package com.example.clothesstoreapp.ui.composeui.screens
+package com.example.clothesstoreapp.ui.composeuisample.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,31 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 
-//class BasketScreen : Fragment(){
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        return ComposeView(requireContext()).apply {
-//            setContent {
-//                Box(
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                        .background(Color.Magenta),
-//                    contentAlignment = Alignment.Center
-//                ) {
-//                    Text(
-//                        text = "BASKETzzz",
-//                        fontSize = MaterialTheme.typography.h3.fontSize,
-//                        fontWeight = FontWeight.Bold,
-//                        color = Color.White
-//                    )
-//                }
-//            }
-//        }
-//    }
-//}
 
 @Composable
 fun BasketScreen() {

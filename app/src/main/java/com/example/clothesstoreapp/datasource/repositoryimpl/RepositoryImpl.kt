@@ -9,10 +9,12 @@ import com.example.clothesstoreapp.datasource.utils.BasketMapper
 import com.example.clothesstoreapp.datasource.utils.WishlistMapper
 import com.example.clothesstoreapp.datasource.network.utils.Resource
 import com.example.clothesstoreapp.datasource.network.utils.ResponseConverter
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
 /**
- *  Actual implementation of the repository that communicates with remote source (in our case) and to local database if we had one
+ *  Actual implementation of the repository that communicates with remote source and to local database
  *  Repository acts as a single source of truth for data in our app
  */
 class RepositoryImpl
@@ -39,9 +41,28 @@ class RepositoryImpl
     override suspend fun insertWishlistItem(item: Product): Long {
         return db.WishlistDao().insertItem(wishlistMapper.mapToEntity(item))
     }
+    override suspend fun deleteWishlistItem(item: Product) {
+        return db.WishlistDao().deleteItem(wishlistMapper.mapToEntity(item))
+    }
+
+    override suspend fun getWishListCount(): Flow<Int> {
+        return db.WishlistDao().getWishListCount().transform {
+            emit(it)
+        }
+    }
+
+    override suspend fun getBasketCount(): Flow<Int> {
+        return db.BasketDao().getBasketCount().transform {
+            emit(it)
+        }
+    }
+
+    override suspend fun deleteBasketItemAndFetch(productId : Int): List<Product> {
+       return basketMapper.mapFromEntityList(db.BasketDao().deleteBasketEntryAndRefresh(productId))
+    }
 
     override suspend fun fetchBasketItems(): List<Product> {
-        return basketMapper.mapFromEntityList(db.BasketDao().getAll())
+        return basketMapper.mapFromEntityList(db.BasketDao().getAllWithQty())
     }
 
     override suspend fun insertBasketItem(item: Product): Long {

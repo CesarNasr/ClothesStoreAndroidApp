@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.clothesstoreapp.ui.viewmodels.SharedViewModel"
+            type="com.example.clothesstoreapp.ui.viewmodels.MainViewModel"
 
             />
     </data>
@@ -38,9 +38,10 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavBar"
             style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
             android:elevation="5dp"
             app:itemIconTint="@drawable/selector_bottom_nav_color"
             app:itemTextColor="@drawable/selector_bottom_nav_color"

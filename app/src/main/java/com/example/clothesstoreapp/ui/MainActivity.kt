@@ -7,14 +7,14 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.clothesstoreapp.R
 import com.example.clothesstoreapp.databinding.ActivityMainBinding
-import com.example.clothesstoreapp.ui.viewmodels.SharedViewModel
+import com.example.clothesstoreapp.ui.viewmodels.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val sharedViewModel: SharedViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,11 +22,40 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.viewModel = sharedViewModel
+        binding.viewModel = mainViewModel
         binding.lifecycleOwner = this
         binding.executePendingBindings()
 
         setupNavController()
+
+    }
+
+    private fun observeBadgeCounters(navView: BottomNavigationView) {
+        val wishlistMenuItemId: Int = navView.menu.getItem(1).itemId //wishlist item
+        val basketMenuItemId: Int = navView.menu.getItem(2).itemId //basket item
+        val wishListBadge = navView.getOrCreateBadge(wishlistMenuItemId)
+        val basketBadge = navView.getOrCreateBadge(basketMenuItemId)
+
+        mainViewModel.wishListCount.observe(this) {
+            if (it == 0 || it == null) {
+                wishListBadge.isVisible = false   // hide badge
+                wishListBadge.clearNumber()
+            } else {
+                wishListBadge.isVisible = true    // show badge
+                wishListBadge.number = it
+            }
+        }
+
+        mainViewModel.basketCount.observe(this) {
+            if (it == 0 || it == null) {
+                basketBadge.isVisible = false   // hide badge
+                basketBadge.clearNumber()
+            } else {
+                basketBadge.isVisible = true  // show badge
+                basketBadge.number = it
+            }
+        }
+
     }
 
 
@@ -38,17 +67,6 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.bottomNavBar)
         navView.setupWithNavController(navController)
 
-
-        // todo put in observable
-
-        val menuItemId: Int = navView.menu.getItem(1).itemId //0 menu item index.
-
-        val badge = navView.getOrCreateBadge(menuItemId)
-        badge.isVisible = true
-        badge.number = 99
-
-//        badge.isVisible = false   //hide badge
-//        badge.clearNumber()
-        //bottomNavigation.removeBadge(menuItemId)
+        observeBadgeCounters(navView)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.clothesstoreapp.ui.composeui
+package com.example.clothesstoreapp.ui.composeuisample
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite

@@ -1,4 +1,4 @@
-package com.example.clothesstoreapp.ui.composeui.screens
+package com.example.clothesstoreapp.ui.composeuisample.screens
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.*
@@ -10,8 +10,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.clothesstoreapp.ui.composeui.BottomBarScreen
-import com.example.clothesstoreapp.ui.composeui.BottomNavGraph
+import com.example.clothesstoreapp.ui.composeuisample.BottomBarScreen
+import com.example.clothesstoreapp.ui.composeuisample.BottomNavGraph
 
 @Composable
 fun MainScreen() {

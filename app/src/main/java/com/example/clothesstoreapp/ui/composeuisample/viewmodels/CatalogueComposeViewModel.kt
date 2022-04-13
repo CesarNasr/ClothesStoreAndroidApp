@@ -1,43 +1,45 @@
-package com.example.clothesstoreapp.ui.viewmodels
+package com.example.clothesstoreapp.ui.composeuisample.viewmodels
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.clothesstoreapp.R
 import com.example.clothesstoreapp.datasource.model.Product
 import com.example.clothesstoreapp.datasource.network.utils.Resource
 import com.example.clothesstoreapp.datasource.repository.Repository
-import com.example.clothesstoreapp.ui.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
-/**
- * View model holding the logic data of it's corresponding view (fragment / activity)
- */
+
 @HiltViewModel
-class CatalogueViewModel @Inject constructor(
+class CatalogueComposeViewModel @Inject constructor(
     private val repository: Repository,
     @ApplicationContext private val applicationContext: Context,
-) : ViewModel() {
-    val uiState = MutableLiveData<UiState>()
+
+    ) : ViewModel() {
+
+
+    private val _uiState = MutableStateFlow<UiState>(UiState.Empty)
+    val uiState: StateFlow<UiState> = _uiState
 
     init {
         fetchProducts()
     }
 
     private fun fetchProducts() {
-        uiState.postValue(UiState.Loading)
+        _uiState.value = UiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = repository.fetchProducts()
                 when (response) {
                     is Resource.Success -> {
                         response.data?.let {
-                            uiState.postValue(UiState.Loaded(data = it.products as MutableList<Product>))
+                            _uiState.value = UiState.Loaded(it.products)
                         }
                     }
                     is Resource.Error -> {
@@ -45,7 +47,6 @@ class CatalogueViewModel @Inject constructor(
                     }
 
                     is Resource.Loading -> {
-                        uiState.postValue(UiState.Loading)
                     }
                 }
             } catch (e: Exception) {
@@ -62,7 +63,16 @@ class CatalogueViewModel @Inject constructor(
         if (isInternetError) errorMessage =
             applicationContext.getString(R.string.check_internet_connection)
 
-        uiState.postValue(UiState.Error(message = errorMessage))
+        _uiState.value = UiState.Error(
+            errorMessage
+        )
     }
 
+}
+
+sealed class UiState {
+    object Empty : UiState()
+    object Loading : UiState()
+    class Loaded(val data: List<Product>) : UiState()
+    class Error(val message: String) : UiState()
 }

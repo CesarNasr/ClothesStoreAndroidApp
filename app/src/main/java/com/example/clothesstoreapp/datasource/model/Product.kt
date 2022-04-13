@@ -19,5 +19,7 @@ data class Product(
     @SerializedName("price")
     val price: Double,
     @SerializedName("stock")
-    val stock: Int? = null
+    val stock: Int? = null,
+    @SerializedName("qty")
+    val qty: Int? = null
 ) : Serializable

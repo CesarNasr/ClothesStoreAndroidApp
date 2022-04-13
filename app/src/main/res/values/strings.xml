@@ -12,4 +12,13 @@
     <string name="category">Category</string>
     <string name="amount_in_stock">Amount in Stock</string>
     <string name="in_stock">In Stock</string>
+    <string name="wish_list">Wish List</string>
+    <string name="add_to_cart">add to cart</string>
+    <string name="checkout">Checkout</string>
+    <string name="add_products_to_your_basket">Add products to your \'Basket\'</string>
+    <string name="add_products_to_your_wishlist">Add products to your Wishlist</string>
+    <string name="moved_to_basket">Moved to Basket</string>
+    <string name="item_deleted">Item deleted</string>
+    <string name="added_to_wishlist">Item added to Wish List</string>
+    <string name="item_added_cart">Item Added to Basket</string>
 </resources>

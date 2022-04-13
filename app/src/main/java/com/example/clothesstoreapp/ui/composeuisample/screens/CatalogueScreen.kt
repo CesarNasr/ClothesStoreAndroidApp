@@ -1,4 +1,4 @@
-package com.example.clothesstoreapp.ui.composeui.screens
+package com.example.clothesstoreapp.ui.composeuisample.screens
 
 import android.content.Context
 import android.content.ContextWrapper
@@ -30,32 +30,33 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.clothesstoreapp.datasource.model.Product
+import com.example.clothesstoreapp.ui.composeuisample.viewmodels.CatalogueComposeViewModel
+import com.example.clothesstoreapp.ui.composeuisample.viewmodels.UiState
 import com.example.clothesstoreapp.ui.viewmodels.CatalogueViewModel
-import com.example.clothesstoreapp.ui.viewmodels.UiState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun CatalogueScreen(catalogueViewModel: CatalogueViewModel = hiltViewModel()) {
+fun CatalogueScreen(catalogueViewModel: CatalogueComposeViewModel = hiltViewModel()) {
 
-//    when (val state = catalogueViewModel.uiState.collectAsState().value) {
-//        is UiState.Empty -> Text(
-//            text = "APP NAME",
-//            modifier = Modifier.padding(16.dp)
-//        )
-//        is UiState.Loading ->
-//            Column(
-//                modifier = Modifier.fillMaxSize(),
-//                verticalArrangement = Arrangement.Center,
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ) {
-//                CircularProgressIndicator()
-//            }
-//        is UiState.Error -> ErrorDialog(state.message)
-//        is UiState.Loaded -> {
-//            ListLayout(state.data)
-//        }
-//    }
+    when (val state = catalogueViewModel.uiState.collectAsState().value) {
+        is UiState.Empty -> Text(
+            text = "APP NAME",
+            modifier = Modifier.padding(16.dp)
+        )
+        is UiState.Loading ->
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                CircularProgressIndicator()
+            }
+        is UiState.Error -> ErrorDialog(state.message)
+        is UiState.Loaded -> {
+            ListLayout(state.data)
+        }
+    }
 }
 
 val BottomSheetShape = RoundedCornerShape(

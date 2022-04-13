@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class BasketItem(
+data class Wishlist(
 
     @PrimaryKey
     @ColumnInfo(name = "productId")

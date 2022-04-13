@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.composeui.ComposeMainActivity"
+            android:name=".ui.composeuisample.ComposeMainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ClothesStoreApp" />

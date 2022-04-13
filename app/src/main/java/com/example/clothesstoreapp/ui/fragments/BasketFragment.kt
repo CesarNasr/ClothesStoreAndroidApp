@@ -1,60 +1,109 @@
 package com.example.clothesstoreapp.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.clothesstoreapp.R
+import com.example.clothesstoreapp.databinding.FragmentBasketBinding
+import com.example.clothesstoreapp.datasource.model.Product
+import com.example.clothesstoreapp.ui.adapters.BasketAdapter
+import com.example.clothesstoreapp.ui.utils.UiState
+import com.example.clothesstoreapp.ui.viewmodels.BasketViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [BasketFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class BasketFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    @Inject
+    lateinit var basketAdapter: BasketAdapter
+    private lateinit var binding: FragmentBasketBinding
+    private val viewModel: BasketViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_basket, container, false)
+
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_basket,
+            container,
+            false
+        )
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+        binding.executePendingBindings()
+
+        return binding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
+
+        viewModel.fetchBasketProducts()
+
+        viewModel.basketUiState.observe(viewLifecycleOwner) {
+            if (it is UiState.Loaded) {
+                if (it.data.isNullOrEmpty()) {
+                    // show empty error if needed
+                } else {
+                    basketAdapter.setList(it.data as MutableList<Product>)
+                }
+            } else {
+                // show error if needed
+            }
+        }
+    }
+
+    private fun initRecyclerView() {
+        binding.basketRecyclerview.apply {
+            adapter = basketAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
+
+        basketAdapter.setOnItemClickListener {
+        }
+
+        val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(binding.basketRecyclerview)
+    }
+
+    private val simpleItemTouchCallback: ItemTouchHelper.SimpleCallback = object :
+        ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT or ItemTouchHelper.DOWN or ItemTouchHelper.UP
+        ) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
+            Toast.makeText(requireContext(), resources.getString(R.string.item_deleted), Toast.LENGTH_SHORT).show()
+            //Remove swiped item from DB and notify the RecyclerView on Success
+            val position = viewHolder.adapterPosition
+            viewModel.deleteBasketProducts(basketAdapter.dataList[position].productId.toInt()) { products->
+                basketAdapter.setList(products as MutableList<Product>)
+            }
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BasketFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BasketFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = BasketFragment()
     }
 }

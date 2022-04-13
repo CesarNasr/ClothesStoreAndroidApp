@@ -5,9 +5,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class WishlistItem(
+data class Basket(
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    val id : Int ?= null,
+
     @ColumnInfo(name = "productId")
     val productId: String,
 
@@ -21,7 +23,8 @@ data class WishlistItem(
     val price: Double,
 
     @ColumnInfo(name = "qty")
-    val qty: Int = 1
+    val qty: Int?,
+
 )
 
 
