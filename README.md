@@ -7,16 +7,15 @@ to solely use in the app, as I would have not been able to showcase my real unde
 For future projects, I plan to get for comfortable with Compose UI and start using it instead of the traditional XML layouts and Databinding. Thank you for understanding.
 
 
-Technologies and Languages used :
+SDKs and Languages used :
 - Kotlin
 - Android SDK
 
 Jetpack Library
-- Coroutines and flows (especilly for room database)
+- Coroutines, StateFlow and Flow (especilly for room database)
 - Navigation Component Architecture
 - Safe Args
 - ViewModels
-- LiveData
 - Data binding
 
 Architecures and patterns :
@@ -27,17 +26,22 @@ Architecures and patterns :
 - SOLID principles
 
 Layouts and Designs:
-- Constraint and other Layouts
+- ConstraintLayout and other Layouts
 - Material Design
 - Data binding
 - Sample compose UI "composeuisample" package
 
+- I have implemented a sample work for :
+  - UnitTests (MockRepository and viewmodels)
+  - Integrated Tests ( ex : to test DAOs in Room Database)
+
+
 What could have been added :
-- Fully implementing Clean Architecture
+- Fully implementing Clean Architecture (added UseCase classes)
 - Better UX practices
 - Better SOLID Principles
 - Implementing Compose UI instead of XML layouts
-- Unit tests
+- Better UniTests practices and wider implementations
 - CI/CD pipelines (github actions / bitrise / etc...)
 
 Thank you :) 
